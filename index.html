@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous">
+    <style>
+      h1 {
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+  <div style="padding-top: 40px; padding-bottom: 30px;"></div>
+  <div class="container">
+  <h1>Star Wars Info</h1>
+      
+    <form action="">
+      <div>
+          <label style="text-align:center;">Search for a starwars resource</label>
+          <ul>
+            <li>1st enter the name</li>
+            <li>2nd enter the category</li>
+            <li>Optional: tranlsate into Wookie?</li>
+          </ul>
+          <br>
+          <input type="text" placeholder="Enter Resource Name" id="starwars">
+          <select id = "resourceType">
+            <option value = "people">People</option>
+            <option value = "planets">Planets</option>
+            <option value = "species">Species</option>
+            <option value = "starships">Starships</option>
+            <option value = "vehicles">Vehicles</option>
+          
+          </select>
+          <input type="radio" id="English" name="language" checked="checked"> <label style="display:inline;" for="English" name="labelLanguage">English</label>
+
+          <input type="radio" id="Wookie" name="language"> <label for="Wookie" name="labelLanguage" style="display:inline">Wookie</label>
+
+          <input type="submit" class="button-primary u-full-width" value="submit" style="display:block" id="goButton">
+
+      </div>
+     </form>
+   
+     <div id="forName">
+
+     </div>
+  <div id="forResults" style="display:hidden;">
+
+
+  </div>
+</div>
+  <script src="easyhttp.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
