@@ -18,7 +18,7 @@ let resourceType = "people";
 
 let resourceTypeValue = document.getElementById("resourceType");
 
-resourceTypeValue.addEventListener("click", () => resourceType = resourceTypeValue.value)
+resourceTypeValue.addEventListener("keyup", () => resourceType = resourceTypeValue.value)
 
 // bind the search button
 let goButton = document.getElementById('goButton');
@@ -33,7 +33,7 @@ let engLang = document.getElementById("English");
 let baseUrl = "https://swapi.co/api/";
 
 
-goButton.addEventListener("click", chooseData());
+goButton.addEventListener("click", function() {chooseData()});
 
 function chooseData(){
 
@@ -43,27 +43,29 @@ function chooseData(){
   
   switch (resourceType) {
     case 'people':
-      fetchData(insertPeopleInfo);
+      fetchPeople();
       break;
     case 'planets':
-      fetchData(insertPlanetInfo);
+      fetchPlanet();
       break;
     case 'starships':
-       fetchData(insertVehiclesShipsInfo);
+       fetchVehicle();
       break;
     case 'vehicles':
-    fetchData(insertVehiclesShipsInfo)
+    fetchVehicle();
     break;
+    case 'species':
+      fetchSpecies();
   // open D&Dcalc to see how I set the button to delete the table.
   // I guess if something exists then I make it delete, if
     }
 }
 
-function fetchData(callback){
+function fetchPeople(){
   let fullUrl;
   let error;
   let theJSON;
-  fullUrl = baseUrl + resourceType + "?search=" + clientResource;
+  fullUrl = baseUrl + resourceType + "/?search=" + clientResource;
   // take the fullURl to fetch the resource
   // take the response stream and call Body.json() method on it
   // that method reads the response until completion
@@ -72,19 +74,52 @@ function fetchData(callback){
   
   //fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json).catch(err => error = "Something went wrong" )
 
-
+  insertCodeBlock();
   // .then() chain so that everything is taken care of then callback(theJSON) is called?
+
+
+fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json)
+  .then(ourInfo => theJSON = ourInfo.results[0])
+  .then((theJSON) => {document.getElementById('forName').innerText = theJSON.name;
+  delete theJSON.name;
+   let newOutput ='';
+
+    for (trait in theJSON){
+     if (trait === 'homeworld'){
+	break;}
+
+	newOutput += `<li>${trait}: ${theJSON[trait]}`}
+	document.getElementById('resultList').innerHTML = newOutput;
+	}).catch(err => console.log(err))
+
+
+
+
+
+/*
   fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json)
   .then(ourInfo => theJSON = ourInfo.results[0])
-  .then(callback(theJSON))
-  .catch(err => error = "Something went wrong" )
+  .then(theJSON => {
+    document.getElementById('forName').innerText = theJSON.name;
+  delete theJSON.name;
+let newOutput ='';
+
+for (trait in theJSON){
+  if (trait === 'homeworld'){
+break;}
+  }
+newOutput += `<li>${trait}: ${theJSON[trait]}`
+
+  document.getElementById('resultList').innerHTML = newOutput;
 
   //theJSON = ourInfo.results[0];
   // switch on the button submit
   //callback(theJSON);
-}
 
+  }).catch(err => error = "Something went wrong" );}
 // insert code block with skeleton's format.
+*/
+}
 function insertCodeBlock(){
   
  resultsSection.innerHTML = `<pre id="removePre">
