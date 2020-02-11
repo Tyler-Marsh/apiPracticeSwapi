@@ -18,7 +18,7 @@ let resourceType = "people";
 
 let resourceTypeValue = document.getElementById("resourceType");
 
-resourceTypeValue.addEventListener("keyup", () => resourceType = resourceTypeValue.value)
+resourceTypeValue.addEventListener("change", () => resourceType = resourceTypeValue.value)
 
 // bind the search button
 let goButton = document.getElementById('goButton');
@@ -33,7 +33,10 @@ let engLang = document.getElementById("English");
 let baseUrl = "https://swapi.co/api/";
 
 
-goButton.addEventListener("click", function() {chooseData()});
+goButton.addEventListener("click", function(e) {e.preventDefault; 
+  getResource.value = '';
+  
+  chooseData()});
 
 function chooseData(){
 
@@ -56,16 +59,30 @@ function chooseData(){
     break;
     case 'species':
       fetchSpecies();
+    break;
   // open D&Dcalc to see how I set the button to delete the table.
   // I guess if something exists then I make it delete, if
     }
 }
 
 function fetchPeople(){
+
   let fullUrl;
   let error;
-  let theJSON;
+  //let theJSON;
   fullUrl = baseUrl + resourceType + "/?search=" + clientResource;
+
+
+  // create headers and request to deal with cors
+  
+  let h = new Headers();
+  h.append('Accept', 'application/json');
+
+  let req = new Request(fullUrl, {
+	method: 'GET',
+	headers: h,
+	mode: 'cors'
+	});
   // take the fullURl to fetch the resource
   // take the response stream and call Body.json() method on it
   // that method reads the response until completion
@@ -77,8 +94,10 @@ function fetchPeople(){
   insertCodeBlock();
   // .then() chain so that everything is taken care of then callback(theJSON) is called?
 
+  // put the req into fetch to asynchronously deal with the rest
+  // of the information
 
-fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json)
+fetch(req).then(res => res.json()).then(json => ourInfo = json)
   .then(ourInfo => theJSON = ourInfo.results[0])
   .then((theJSON) => {document.getElementById('forName').innerText = theJSON.name;
   delete theJSON.name;
@@ -92,33 +111,6 @@ fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json)
 	document.getElementById('resultList').innerHTML = newOutput;
 	}).catch(err => console.log(err))
 
-
-
-
-
-/*
-  fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json)
-  .then(ourInfo => theJSON = ourInfo.results[0])
-  .then(theJSON => {
-    document.getElementById('forName').innerText = theJSON.name;
-  delete theJSON.name;
-let newOutput ='';
-
-for (trait in theJSON){
-  if (trait === 'homeworld'){
-break;}
-  }
-newOutput += `<li>${trait}: ${theJSON[trait]}`
-
-  document.getElementById('resultList').innerHTML = newOutput;
-
-  //theJSON = ourInfo.results[0];
-  // switch on the button submit
-  //callback(theJSON);
-
-  }).catch(err => error = "Something went wrong" );}
-// insert code block with skeleton's format.
-*/
 }
 function insertCodeBlock(){
   
@@ -139,92 +131,173 @@ function removeCodeBlock() {
   document.getElementById("removePre").remove();
 }
 
-// functions to determine when to stop displaying information
 
-//
+function fetchVehicle(){
 
-function insertPeopleInfo(ourJson){
- 
-  document.getElementById('forName').innerText = ourJson.name;
-  delete ourJson.name;
-let newOutput ='';
+  let fullUrl;
+  //let theJSON;
+  fullUrl = baseUrl + resourceType + "/?search=" + clientResource;
 
-for (trait in ourJson){
-     if (trait === 'homeworld'){
-	break;}
 
-	newOutput += `<li>${trait}: ${ourJson[trait]}`
-	}
+  // create headers and request to deal with cors
+  
+  let h = new Headers();
+  h.append('Accept', 'application/json');
+
+  let req = new Request(fullUrl, {
+	method: 'GET',
+	headers: h,
+	mode: 'cors'
+	});
+  // take the fullURl to fetch the resource
+  // take the response stream and call Body.json() method on it
+  // that method reads the response until completion
+  // then take the promise and assign the json to a variable to use later
+  // catch errors bc without a .catch() many browsers won't work with it.
+  
+  //fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json).catch(err => error = "Something went wrong" )
+
+  insertCodeBlock();
+  // .then() chain so that everything is taken care of then callback(theJSON) is called?
+
+  // put the req into fetch to asynchronously deal with the rest
+  // of the information
+
+fetch(req).then(res => res.json()).then(json => ourInfo = json)
+  .then(ourInfo => theJSON = ourInfo.results[0])
+  .then((theJSON) => {document.getElementById('forName').innerText = theJSON.name;
+  delete theJSON.name;
+   let newOutput ='';
+
+
+   for (trait in theJSON){
+    if (trait === 'pilots'){
+ break;}
+
+   
+ newOutput += `<li>${trait}: ${theJSON[trait]}`
+ }
 
 document.getElementById('resultList').innerHTML = newOutput;
+}).catch(err => console.log(err)); 
+
 }
 
 
 
-function insertPlanetInfo(planetJson){
- 
-  document.getElementById('forName').innerText = planetJson.name;
-  delete planetJson.name;
+
+
+
+function fetchSpecies() {
+
+
+
+  let fullUrl;
+  //let theJSON;
+  fullUrl = baseUrl + resourceType + "/?search=" + clientResource;
+
+
+  // create headers and request to deal with cors
+  
+  let h = new Headers();
+  h.append('Accept', 'application/json');
+
+  let req = new Request(fullUrl, {
+	method: 'GET',
+	headers: h,
+	mode: 'cors'
+	});
+  // take the fullURl to fetch the resource
+  // take the response stream and call Body.json() method on it
+  // that method reads the response until completion
+  // then take the promise and assign the json to a variable to use later
+  // catch errors bc without a .catch() many browsers won't work with it.
+  
+  //fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json).catch(err => error = "Something went wrong" )
+
+  insertCodeBlock();
+  // .then() chain so that everything is taken care of then callback(theJSON) is called?
+
+  // put the req into fetch to asynchronously deal with the rest
+  // of the information
+
+fetch(req).then(res => res.json()).then(json => ourInfo = json)
+  .then(ourInfo => theJSON = ourInfo.results[0])
+  .then((theJSON) => {document.getElementById('forName').innerText = theJSON.name;
+
+  document.getElementById('forName').innerText = theJSON.name;
+  delete theJSON.name;
   let newOutput ='';
   
-  for (trait in planetJson){
-       if (trait === 'residents'){
-    break;}
+
+for (trait in theJSON){
+  if (trait === 'people'){
+break;}
+
+if (trait === 'homeworld'){
+ continue;
+}
+}
+newOutput += `<li>${trait}: ${theJSON[trait]}`
+
+
+document.getElementById('resultList').innerHTML = newOutput;
+}).catch(err => console.log(err)) }
+
+
+
+
+// fetch the planet
+
+
+function fetchPlanet(){
   
-    newOutput += `<li>${trait}: ${planetJson[trait]}`
-    }
+
+let fullUrl;
+  //let theJSON;
+  fullUrl = baseUrl + resourceType + "/?search=" + clientResource;
+
+
+  // create headers and request to deal with cors
   
-  document.getElementById('resultList').innerHTML = newOutput;
-  }
+  let h = new Headers();
+  h.append('Accept', 'application/json');
 
-
+  let req = new Request(fullUrl, {
+	method: 'GET',
+	headers: h,
+	mode: 'cors'
+	});
+  // take the fullURl to fetch the resource
+  // take the response stream and call Body.json() method on it
+  // that method reads the response until completion
+  // then take the promise and assign the json to a variable to use later
+  // catch errors bc without a .catch() many browsers won't work with it.
   
-function insertSpeciesInfo(speciesJson){
- 
-  document.getElementById('forName').innerText = speciesJson.name;
-  delete speciesJson.name;
-  let newOutput ='';
-  
-  for (trait in speciesJson){
-       if (trait === 'people'){
-    break;}
+  //fetch(fullUrl).then(res => res.json()).then(json => ourInfo = json).catch(err => error = "Something went wrong" )
 
-    if (trait === 'homeworld'){
-      continue;
-    }
-      
-    newOutput += `<li>${trait}: ${speciesJson[trait]}`
-    }
-  
-  document.getElementById('resultList').innerHTML = newOutput;
-  }
+  insertCodeBlock();
+  // .then() chain so that everything is taken care of then callback(theJSON) is called?
+
+  // put the req into fetch to asynchronously deal with the rest
+  // of the information
+
+fetch(req).then(res => res.json()).then(json => ourInfo = json)
+  .then(ourInfo => theJSON = ourInfo.results[0])
+  .then((theJSON) => {document.getElementById('forName').innerText = theJSON.name;
+  delete theJSON.name;
+   let newOutput ='';
 
 
-  
-  
-function insertVehiclesShipsInfo(vehiclesJson){
- 
-  
-  document.getElementById('forName').innerText = vehiclesJson.name;
-  delete vehiclesJson.name;
-  let newOutput ='';
-  
-  for (trait in vehiclesJson){
-       if (trait === 'pilots'){
-    break;}
+   for (trait in planetJson){
+    if (trait === 'residents'){
+ break;}
 
-      
-    newOutput += `<li>${trait}: ${vehiclesJson[trait]}`
-    }
-  
-  document.getElementById('resultList').innerHTML = newOutput;
-  }
+ newOutput += `<li>${trait}: ${planetJson[trait]}`
+ }
 
+document.getElementById('resultList').innerHTML = newOutput;
 
+  }).catch(err => console.log(err)); 
 
-
-
-
-
-
-
+}
