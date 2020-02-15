@@ -12,16 +12,19 @@
       h1 {
         text-align: center;
       }
+      #loading {
+        display:none;
+        text-align: center;
+      }
     </style>
 </head>
 <body>
   <div style="padding-top: 40px; padding-bottom: 30px;"></div>
   <div class="container">
   <h1>Star Wars Info</h1>
-      
+      <div id="errorParent">
     <form action="">
-      <div>
-          <label style="text-align:center;">Search for a starwars resource</label>
+          <label id="error" style="text-align:center;">Search for a starwars resource</label>
           <ul>
             <li>1st enter the name</li>
             <li>2nd enter the category</li>
@@ -44,15 +47,20 @@
         <!--  <input type="submit" class="button-primary u-full-width" value="submit" style="display:block" id="goButton"> -->
         <button type="button" id="goButton" class="button-primary u-full-width"
           style="display:block">Submit</button>
-
+          </div>
       </div>
      </form>
-   
+    </div>
+    <div id="loading">
+    <img src="img/loading.gif" alt="">
+  </div>
      <div id="forName">
 
      </div>
   <div id="forResults" style="display:hidden;">
-
+    
+     
+    </div>
 
   </div>
 </div>
