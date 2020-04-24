@@ -27,7 +27,7 @@ let engLang = document.getElementById("English");
 
 
 // define the base URL for SWAPI (star wars API)
-let baseUrl = "https://swapi.co/api/";
+let baseUrl = "https://swapi.dev/api/";
 
 
 goButton.addEventListener("click", function(e) {e.preventDefault; 

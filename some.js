@@ -10,13 +10,14 @@ async function fetchData() {
   
   	let h = new Headers();
     h.append('Accept', 'application/json');
-    Access-Control-Allow-Origin: *
+    //Access-Control-Allow-Origin: *);
 
- 	 let request = new Request(fullUrl, {
-	method: 'GET',
-	headers: h,
-	mode: 'cors'
-	});
+    let request = new Request(fullUrl, {
+    method: 'GET',
+    headers: h,
+    mode: 'cors',
+    //'Access-Control-Allow-Origin'
+    });
 	
 	
 	let response = await fetch(request);
